@@ -14,9 +14,9 @@ Example results of the current prototype are shown below:
 
 __Single Training Images__
 
-Image 0             |  Image 1          |
-:-------------------------:|:-------------------------:
-![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_fern/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_4581/0_real.jpg)
+Image 0             |  Image 1          | Image 2
+:-------------------------:|:-------------------------:|:-------------------------:
+![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_fern/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_4581/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_real.jpg)
 
 __Samples__
 
@@ -36,3 +36,11 @@ Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
 512x1024 sample
 :-------------------------:|
 ![Sample-Upscaled](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_4581/size_512x1024.jpg)
+
+Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_3.jpg)
+
+512x1024 sample
+:-------------------------:|
+![Sample-Upscaled](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/size_512x1024.jpg)
