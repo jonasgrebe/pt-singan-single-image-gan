@@ -2,6 +2,11 @@
 
 Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
 
+__Notes__
+- Refactoring of code regarding the handling of the noise maps Z
+- Dynamic RMSE-based adaption of standard deviation at the different scales
+- Application examples: Single Image Animation by Random Walk, Paint2Image Translation, Image Super Resolution, Image Editing, Image Harmonization
+
 Example results of the current prototype are shown below:
 
 __Single Training Images__
