@@ -14,11 +14,11 @@ else:
     device = torch.device("cpu")
 
 # load the single training image
-train_img_path = os.path.join('data', '36-white-and-black-boats-on-body-of-water.jpg')
+train_img_path = os.path.join('data', '220-pile-of-books')
 train_img = imread(train_img_path)
 
 # instantiate the logger and the SinGAN
-logger = TensorboardLogger('singan_36')
+logger = TensorboardLogger('singan_220')
 singan = SinGAN(N=11, logger=logger, device=device)
 
 # get the size of the img for later
