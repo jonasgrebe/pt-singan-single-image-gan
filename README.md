@@ -6,6 +6,7 @@ __Notes__
 - Refactoring of code regarding the handling of the noise maps Z
 - Dynamic RMSE-based adaption of standard deviation at the different scales
 - Application examples: Single Image Animation by Random Walk, Paint2Image Translation, Image Super Resolution, Image Editing, Image Harmonization
+- Inner Steps in the Official Implementation?
 - Spectral Normalization instead of Gradient Penalty? Other Loss Functions?
 - Deformable Convolutions in Generator/Discriminator?
 
