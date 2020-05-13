@@ -17,7 +17,7 @@ __Single Training Images (512x512)__
 
 Image 0             |  Image 1          | Image 2    | Image 3
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_fern/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_4581/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_real.jpg)
+![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_fern/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_4581/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_36/0_real.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_real.jpg)
 
 __Samples__
 
@@ -54,10 +54,10 @@ __Sample 4__             |  __Sample 5__          |  __Sample 6__   |  __Sample 
 
 Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_3.jpg)
+![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_3.jpg)
 __Sample 4__             |  __Sample 5__          |  __Sample 6__   |  __Sample 7__
-![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_4.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_5.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_6.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/0_7.jpg)
+![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_4.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_5.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_6.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/0_7.jpg)
 
 512x1024 Sample
 :-------------------------:|
-![Sample-Upscaled](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_6259/size_512x1024.jpg)
+![Sample-Upscaled](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/size_512x1024.jpg)
