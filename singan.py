@@ -15,7 +15,7 @@ class SinGAN:
     def __init__(self, N, logger, r=4/3, device=torch.device('cpu'), hypers: Dict[str, Any] = {}) -> None:
         # target depth of the SinGAN is (N+1)
         self.N = N
-        # scaling factor
+        # scaling factor, > 1
         self.r = r
         # torch device (either a gpu or per default the cpu)
         self.device = device
@@ -28,7 +28,7 @@ class SinGAN:
         self.hypers = {
             'g_lr': 5e-4, # learning rate for generators
             'd_lr': 5e-4, # learning rate for discriminators
-            'n_blocks': 5, # number of convblocks in each of the models
+            'n_blocks': 5, # number of convblocks in each of the N generators (modules)
             'base_n_channels': 32, # base number of filters for the coarsest module
             'min_n_channels': 32, # minimum number of filters in any layer of any module
             'rec_loss_weight': 10.0, # alpha weight for reconstruction loss
@@ -59,7 +59,7 @@ class SinGAN:
         img = self.transform_input(img)
         img = img.expand(1, 3, target_size[0], target_size[1])
 
-        # fix initial nose map for reconstruction loss computatian
+        # fix initial nose map for reconstruction loss computation
         self.z_init = self.generate_random_noise(scale_sizes[:1])[0]
 
         # training progression
