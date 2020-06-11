@@ -48,8 +48,10 @@ class SinGAN:
 
     def fit(self, img: np.ndarray, steps_per_scale: int = 2000) -> None:
         # precompute all the sizes of the different scales
-        target_size = np.array(img.shape[:-1])
-        scale_sizes = [tuple((target_size // self.r ** n).astype(int)) for n in range(self.N, -1, -1)]
+        target_size = img.shape[:-1]
+
+        # compute scales sizes
+        scale_sizes = self.compute_scale_sizes(target_size)
 
         # print scales to validate choice of N
         print(scale_sizes)
@@ -178,6 +180,7 @@ class SinGAN:
             if not os.path.isdir(run_dir):
                 os.makedirs(run_dir)
             imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_{step}.jpg'), fake)
+
         imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_rec.jpg'), self.transform_output(rec[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
         imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_real.jpg'), self.transform_output(real[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
 
@@ -204,7 +207,7 @@ class SinGAN:
             start_at_scale = len(self.g_pyramid) - 1
 
         # compute all image sizes from the start scale upwards
-        scale_sizes = [tuple((np.array(target_size) // self.r ** n).astype(int)) for n in range(start_at_scale, -1, -1)]
+        scale_sizes = self.compute_scale_sizes(target_size, start_at_scale)
 
         # if no special noise maps are specified, initialize them randomly
         Z_rand = self.generate_random_noise(scale_sizes)
@@ -251,6 +254,12 @@ class SinGAN:
             return [torch.randn(size=(1, 3,)+size) for size in sizes]
 
 
+    def compute_scale_sizes(self, target_size, start_at_scale=None):
+        if start_at_scale is None:
+            start_at_scale = self.N
+        return [tuple((np.array(target_size) // self.r ** n).astype(int)) for n in range(start_at_scale, -1, -1)]
+
+
     def save_checkpoint(self) -> None:
         # create the checkpoint directory if it does not exist
         checkpoint_dir = os.path.join(self.logger.log_dir, 'checkpoints')
@@ -285,3 +294,45 @@ class SinGAN:
 
         # inform the logger about the restored epoch
         self.logger.set_scale(self.N-len(self.g_pyramid)+1)
+
+    # ============ SinGAN Application methods ==================================
+
+    def single_image_animation(self, img, steps_per_scale, step_size, n_frames):
+        self.fit(img=img, steps_per_scale=steps_per_scale)
+        singan.save_checkpoint()
+
+        # TODO: Random Walk in Z-space
+        def random_walk(Z):
+            return Z
+
+        target_size = img.shape[:-1]
+        scales_sizes = self.compute_scale_sizes(target_size=target_size)
+
+        Z = [np.zeros(shape=scale_size) for scale_size in scales_sizes]
+        Z[0] = self.z_init
+
+        frames = []
+        for _ in range(n_frames):
+            frame = self.test(target_size=target_size, Z=Z)
+            frames.append(frame)
+            Z = random_walk(Z, step_size=step_size)
+
+        return frames
+
+
+    def super_resolution(self, img, steps_per_scale, super_steps):
+        self.fit(img=img, steps_per_scale=steps_per_scale)
+        singan.save_checkpoint()
+
+        target_size = img.shape[:-1]
+        for i in range(super_steps):
+            img = self.test(target_size=target_size, injection=img)
+            target_size = (int(target_size[0] * self.r), int(target_size[1] * self.r))
+
+        return img
+
+
+    def harmonization(self, img_bg, img_pasted, steps_per_scale, start_at_scale):
+        self.fit(img=img_bg, steps_per_scale=steps_per_scale)
+        singan.save_checkpoint()
+        return self.test(target_size=img_pasted.shape[:-1], start_at_scale=start_at_scale, injection=img_pasted)
