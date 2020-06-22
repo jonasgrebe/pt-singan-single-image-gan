@@ -7,7 +7,7 @@ import numpy as np
 from imageio import imread, imwrite
 
 from models import SingleScaleGenerator, Discriminator
-from utils import freeze, clamp_weights, gradient_penalty
+from utils import freeze, gradient_penalty
 
 
 class SinGAN:
@@ -24,6 +24,10 @@ class SinGAN:
         self.g_pyramid = []
         self.d_pyramid = []
 
+        # auxiliary instance variables for paragraph below equation (5) in paper
+        self.last_rec = None
+        self.rmses = [1.0]
+
         # default hyperparameters
         self.hypers = {
             'g_lr': 5e-4, # learning rate for generators
@@ -33,7 +37,7 @@ class SinGAN:
             'min_n_channels': 32, # minimum number of filters in any layer of any module
             'rec_loss_weight': 10.0, # alpha weight for reconstruction loss
             'grad_penalty_weight': 0.1, # lambda weight for gradient penalty loss
-            'noise_weight': 0.1
+            'noise_weight': 0.1 # base standard deviation of gaussian noise
         }
         # overwrite them with given hyperparameters
         self.hypers.update(hypers)
@@ -61,7 +65,7 @@ class SinGAN:
         img = self.transform_input(img)
         img = img.expand(1, 3, target_size[0], target_size[1])
 
-        # fix initial nose map for reconstruction loss computation
+        # fix initial noise map for reconstruction loss computation
         self.z_init = self.generate_random_noise(scale_sizes[:1])[0]
 
         # training progression
@@ -103,6 +107,13 @@ class SinGAN:
 
     def fit_single_scale(self, img: np.ndarray, target_size: Tuple[int, int], steps: int) -> None:
         real = torch.nn.functional.interpolate(img, target_size, mode='bilinear', align_corners=True).float().to(self.device)
+
+        # paragraph below equation (5) in paper
+        if self.last_rec is not None:
+            # compute root mean squared error between upsampled version of rec from last scale and the real target of the current scale
+            rmse = torch.sqrt(torch.nn.functional.mse_loss(real, torch.nn.functional.interpolate(self.last_rec, target_size, mode='bilinear', align_corners=True)))
+            self.rmses.insert(0, rmse.detach().cpu().numpy().item())
+        print(self.rmses)
 
         self.logger.set_mode('training')
         for step in range(1, steps+1):
@@ -164,8 +175,8 @@ class SinGAN:
             self.logger.log_losses(loss_dict)
             print(f'[{self.N-len(self.g_pyramid)+1}: {step}|{steps}] -', loss_dict)
 
-        # TODO: compute reconstruction loss between upsampled rec and image of next scale
-        #       to use it as a measure for the noise standard deviation at the next scale
+        # save current reconstruction of this scale temporally
+        self.last_rec = rec
 
         self.logger.set_mode('sampling')
         for step in range(8):
@@ -181,6 +192,7 @@ class SinGAN:
                 os.makedirs(run_dir)
             imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_{step}.jpg'), fake)
 
+        # save reconstruction of real image and downscaled copy of real image
         imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_rec.jpg'), self.transform_output(rec[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
         imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_real.jpg'), self.transform_output(real[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
 
@@ -202,9 +214,13 @@ class SinGAN:
 
 
     def forward_g_pyramid(self, target_size: Tuple[int, int], start_at_scale: int = None, Z: List[torch.Tensor] = None, injection: np.ndarray = None) -> torch.Tensor:
+
         # default starting scale to the coarsest scale
         if start_at_scale is None:
             start_at_scale = len(self.g_pyramid) - 1
+
+        if Z is not None:
+            assert len(Z) == start_at_scale + 1
 
         # compute all image sizes from the start scale upwards
         scale_sizes = self.compute_scale_sizes(target_size, start_at_scale)
@@ -224,16 +240,20 @@ class SinGAN:
         Z = Z_rand
 
         # inject the image at the starting scale if necessary
-        x = injection
+        x = injection if start_at_scale != len(self.g_pyramid)-1 else None
 
         # for each scale from the starting scale upwards
-        for z, size, generator in zip(Z, scale_sizes, self.g_pyramid[:start_at_scale+1][::-1]):
+        for z, size, rmse, generator in zip(Z, scale_sizes, self.rmses[:start_at_scale+1][::-1], self.g_pyramid[:start_at_scale+1][::-1]):
 
             # make sure that z has the correct size
             z = torch.nn.functional.interpolate(z, size, mode='bilinear', align_corners=True)
 
             # scale noise by the specified noise weight
             z *= self.hypers['noise_weight']
+            # scale noise by the rmse of that scale
+            z *= rmse
+
+            print(size, rmse)
 
             if x is not None:
                 # upsample the output of the previous scale if necessary
@@ -273,7 +293,8 @@ class SinGAN:
             'hypers': self.hypers,
             'g_pyramid': self.g_pyramid,
             'd_pyramid': self.d_pyramid,
-            'z_init': self.z_init
+            'z_init': self.z_init,
+            'rmses': self.rmses
         }
         # save the checkpoint
         torch.save(checkpoint, os.path.join(checkpoint_dir, f'{self.logger.run_name}.ckpt'))
@@ -291,48 +312,7 @@ class SinGAN:
         self.g_pyramid = checkpoint['g_pyramid']
         self.d_pyramid = checkpoint['d_pyramid']
         self.z_init = checkpoint['z_init']
+        self.rmses = checkpoint['rmses']
 
         # inform the logger about the restored epoch
         self.logger.set_scale(self.N-len(self.g_pyramid)+1)
-
-    # ============ SinGAN Application methods ==================================
-
-    def single_image_animation(self, img, steps_per_scale, step_size, n_frames):
-        self.fit(img=img, steps_per_scale=steps_per_scale)
-        singan.save_checkpoint()
-
-        # TODO: Random Walk in Z-space
-        def random_walk(Z):
-            return Z
-
-        target_size = img.shape[:-1]
-        scales_sizes = self.compute_scale_sizes(target_size=target_size)
-
-        Z = [np.zeros(shape=scale_size) for scale_size in scales_sizes]
-        Z[0] = self.z_init
-
-        frames = []
-        for _ in range(n_frames):
-            frame = self.test(target_size=target_size, Z=Z)
-            frames.append(frame)
-            Z = random_walk(Z, step_size=step_size)
-
-        return frames
-
-
-    def super_resolution(self, img, steps_per_scale, super_steps):
-        self.fit(img=img, steps_per_scale=steps_per_scale)
-        singan.save_checkpoint()
-
-        target_size = img.shape[:-1]
-        for i in range(super_steps):
-            img = self.test(target_size=target_size, injection=img)
-            target_size = (int(target_size[0] * self.r), int(target_size[1] * self.r))
-
-        return img
-
-
-    def harmonization(self, img_bg, img_pasted, steps_per_scale, start_at_scale):
-        self.fit(img=img_bg, steps_per_scale=steps_per_scale)
-        singan.save_checkpoint()
-        return self.test(target_size=img_pasted.shape[:-1], start_at_scale=start_at_scale, injection=img_pasted)
