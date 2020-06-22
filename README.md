@@ -115,13 +115,13 @@ Train     |  Paint         |  Scale 8     |   Scale 9
 ![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5026_1.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_9.jpg)
 
 
-Train     |  Paint         |  Scale 8     |   Scale 9
+Train     |  Paint         |  Scale 7     |   Scale 9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_0.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_0_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_0_9.jpg)
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_0.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_0_7.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_0_9.jpg)
 
-Train     |  Paint         |  Scale 8     |   Scale 9
+Train     |  Paint         |  Scale 6     |   Scale 9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_1.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_1_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_1_9.jpg)
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_1.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_1_6.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_1_9.jpg)
 
 
 
