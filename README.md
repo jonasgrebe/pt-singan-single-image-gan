@@ -22,19 +22,26 @@ If the not_pretrained flag is not given but a trained model with the identifier 
 ### Random Sampling
 
 ```console
-python sample.py --run_name <String> --img 5026-green-fern-plant-during-daytime -- height <int> --width <int>
+python sample.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg -- height <int> --width <int>
 ```
 
 ### Scale Injection
 
 ```console
-python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime
+python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg
 ```
 
 ### Super Resolution
 
 ```console
-python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime --super_scales <int>
+python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg --super_scales <int>
+```
+
+### Paint2Image
+_Note_: You have to additionally provide a training image via --img if you want to train a new model. The paint images are expected to be found in the data/paint subdirectory.
+
+```console
+python paint2image.py --run_name <String> --paint 5026_1.jpg
 ```
 
 ## Example results
@@ -96,4 +103,25 @@ r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</
 r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![SR-0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_0r.jpg)  |  ![SR-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_1r.jpg) | ![SR-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_2r.jpg) | ![SR-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_3r.jpg)
+
+
+### Paint2Image
+Train     |  Paint         |  Scale 8     |   Scale 9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5026_0.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_0_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_0_9.jpg)
+
+Train     |  Paint         |  Scale 8     |   Scale 9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5026_1.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_9.jpg)
+
+
+Train     |  Paint         |  Scale 8     |   Scale 9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_0.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_0_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_0_9.jpg)
+
+Train     |  Paint         |  Scale 8     |   Scale 9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![p2i_0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)   |  ![p2i_1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_1.jpg) | ![p2i_2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_1_8.jpg) | ![p2i_3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_473_1_9.jpg)
+
+
 
