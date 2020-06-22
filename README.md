@@ -1,6 +1,6 @@
 # pt-singan-single-image-gan
 
-Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
+[WIP] Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
 
 ## Note
 - Application examples: Single Image Animation by Random Walk, Paint2Image Translation, Image Super Resolution, Image Editing, Image Harmonization
