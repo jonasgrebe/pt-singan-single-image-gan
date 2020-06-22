@@ -253,8 +253,6 @@ class SinGAN:
             # scale noise by the rmse of that scale
             z *= rmse
 
-            print(size, rmse)
-
             if x is not None:
                 # upsample the output of the previous scale if necessary
                 # (or make sure that the injected image has the correct size)
