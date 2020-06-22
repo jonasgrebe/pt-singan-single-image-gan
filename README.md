@@ -53,6 +53,7 @@ Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
 ![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/0_3.jpg)
 
 Sample 4
+:-------------------------:
 ![Sample-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/size_512x2048.jpg)
 
 
@@ -61,6 +62,8 @@ Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
 ![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/0_3.jpg)
 
 Sample 4
+
+:-------------------------:
 ![Sample-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/size_512x2048.jpg)
 
 ## Scale Injections
@@ -87,11 +90,11 @@ Scale 4           |  Scale 5       |  Scale 7   |   Scale 9
 
 ### Super Resolution (by Factor r)
 
-r^0          |  r^1       |  r^2   |   r^3
+r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![SR-0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_0r.jpg)  |  ![SR-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_1r.jpg) | ![SR-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_2r.jpg) | ![SR-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_3r.jpg)
 
-r^0          |  r^1       |  r^2   |   r^3
+r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![SR-0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_0r.jpg)  |  ![SR-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_1r.jpg) | ![SR-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_2r.jpg) | ![SR-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_3r.jpg)
 
