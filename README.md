@@ -133,7 +133,8 @@ Scale 4           |  Scale 5       |  Scale 7   |   Scale 9
 
 
 
-### Super Resolution (by Factor r)
+### Super Resolution (by factor r)
+_Note_: Open these images in a new tab if you want to see the detailled effects of the super resolution.
 
 r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
