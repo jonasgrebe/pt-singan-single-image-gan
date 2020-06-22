@@ -50,7 +50,7 @@ python paint2image.py --run_name <String> --paint 5026_1.jpg
 
 Image 0             |  Image 1          | Image 2    | Image 3
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)  | ![Training-Image-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/856-zebra-in-savanna.jpg) | ![Training-Image-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/220-pile-of-books.jpg)
+![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)  | ![Training-Image-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/220-pile-of-books.jpg)| ![Training-Image-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/856-zebra-in-savanna.jpg) 
 
 
 ### Random samples
@@ -71,6 +71,15 @@ Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
 Sample 4
 :-------------------------:
 ![Sample-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/size_512x2048.jpg)
+
+
+Sample 0             |  Sample 1          |  Sample 2   |  Sample 3
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Sample-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/0_0.jpg)  |  ![Sample-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/0_1.jpg) | ![Sample-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/0_2.jpg) | ![Sample-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/0_3.jpg)
+
+Sample 4
+:-------------------------:
+![Sample-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/size_512x2048.jpg)
 
 ## Scale Injections
 
@@ -94,6 +103,15 @@ Scale 4           |  Scale 5       |  Scale 7   |   Scale 9
 ![Inj-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_4.jpg)  |  ![Inj-6](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_5.jpg) | ![Inj-7](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_7.jpg) | ![Inj-8](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_9.jpg)
 
 
+Scale 0           |  Scale 1       |  Scale 2   |   Scale 3
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Inj-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_0.jpg)  |  ![Inj-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_1.jpg) | ![Inj-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_2.jpg) | ![Inj-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_3.jpg)
+
+
+Scale 4           |  Scale 5       |  Scale 7   |   Scale 9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Inj-5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_4.jpg)  |  ![Inj-6](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_5.jpg) | ![Inj-7](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_7.jpg) | ![Inj-8](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/inj_9.jpg)
+
 ### Super Resolution (by Factor r)
 
 r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
@@ -104,6 +122,9 @@ r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![SR-0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_0r.jpg)  |  ![SR-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_1r.jpg) | ![SR-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_2r.jpg) | ![SR-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/img_sr_3r.jpg)
 
+r<sup>0</sup>        |  r<sup>1</sup>         |  r<sup>2</sup>     |   r<sup>3</sup>  
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![SR-0](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/img_sr_0r.jpg)  |  ![SR-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/img_sr_1r.jpg) | ![SR-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/img_sr_2r.jpg) | ![SR-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_220/img_sr_3r.jpg)
 
 ### Paint2Image
 Train     |  Paint         |  Scale 8     |   Scale 9
