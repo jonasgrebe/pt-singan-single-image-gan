@@ -12,9 +12,10 @@ parser = argparse.ArgumentParser()
 parser = argparse.ArgumentParser(description='SinGAN - Super Resolution')
 parser.add_argument('--run_name', required=True)
 parser.add_argument('--img', required=True)
+parser.add_argument('--super_scales', type=int, required=True)
+
 parser.add_argument('--N', type=int, default=0)
 parser.add_argument('--not_pretrained', action='store_true')
-parser.add_argument('--super_scales', type=int, required=True)
 parser.add_argument('--steps_per_scale', type=int, default=2000)
 
 args = parser.parse_args()
