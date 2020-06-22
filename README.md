@@ -50,7 +50,7 @@ python paint2image.py --run_name <String> --paint 5026_1.jpg
 
 Image 0             |  Image 1          | Image 2    | Image 3
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)  | ![Training-Image-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5739-black-nike-slide-sandals-on-swimming-pool.jpg) | ![Training-Image-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/220-pile-of-books.jpg)
+![Training-Image-1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![Training-Image-2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)  | ![Training-Image-3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/1497-calm-body-of-water-near-tall-trees-during-daytime.jpg) | ![Training-Image-4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/220-pile-of-books.jpg)
 
 
 ### Random samples
