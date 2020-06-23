@@ -62,19 +62,19 @@ training (512x512)         |         512x512           |         512x512        
 
 ### Scale Injections
 
-training (512x512)         |         Scale 0           |         Scale 1           |          Scale 2          |         Scale 3   |         Scale 4
+training (512x512)         |         Scale 0/10           |         Scale 1/10           |          Scale 2/10          |         Scale 3/10   |         Scale 4/10
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) |![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_0.jpg) |![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_1.jpg) |![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_2.jpg) |![img4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_3.jpg) |![img5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_4.jpg) 
 
-Scale 5         |         Scale 6          |         Scale 7           |          Scale 8          |         Scale 9 |         Scale 10
+Scale 5/10         |         Scale 6/10          |         Scale 7/10           |          Scale 8/10          |         Scale 9/10 |         Scale 10/10
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_4.jpg) |![img6](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_5.jpg) |![img7](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_6.jpg) |![img8](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_7.jpg) |![img9](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_8.jpg) |![img10](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_9.jpg) |![img11](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/inj_10.jpg)
 
-training (512x512)         |         Scale 0           |         Scale 1           |          Scale 2          |         Scale 3   |         Scale 4
+training (512x512)         |         Scale 0/10           |         Scale 1/10          |          Scale 2/10          |         Scale 3/10   |         Scale 4
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg) |![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_0.jpg) |![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_1.jpg) |![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_2.jpg) |![img4](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_3.jpg) |![img5](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_4.jpg) 
 
-Scale 5         |         Scale 6          |         Scale 7           |          Scale 8          |         Scale 9 |         Scale 10
+Scale 5/10         |         Scale 6/10          |         Scale 7/10           |          Scale 8/10          |         Scale 9/10 |         Scale 10/10
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_4.jpg) |![img6](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_5.jpg) |![img7](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_6.jpg) |![img8](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_7.jpg) |![img9](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_8.jpg) |![img10](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_9.jpg) |![img11](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/inj_10.jpg)
 
@@ -88,7 +88,13 @@ training (512x512)         |       SinGAN  (1616x1616)     |         bilinear (1
 ----
 
 ### Paint2Image
+training       |       paint   |   Scale 7/9   |    Scale 9/9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg)  | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5026_1.jpg)| ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_7.jpg) | ![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_9.jpg)
 
+training       |       paint   |   Scale 6/9   |    Scale 9/9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/473-brown-rock-wall.jpg)  | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/473_1.jpg)| ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_1_6.jpg) | ![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_473/paint_473_1_9.jpg)
 ----
 
 ### Single Image Animation
