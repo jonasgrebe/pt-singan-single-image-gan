@@ -82,4 +82,4 @@ Scale 5         |         Scale 6          |         Scale 7           |        
 
 training (512x512)         |         r<sup>4</sup>     |         bilinear          |  
 :-------------------------:|:-------------------------:|:-------------------------:|
-![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/samples/singan_5026/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/samples/singan_5026/img_bilinear_4r.jpg) 
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_bilinear_4r.jpg) 
