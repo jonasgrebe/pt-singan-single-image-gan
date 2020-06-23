@@ -1,6 +1,7 @@
 import torch
 import os
 from imageio import imread, imwrite
+import cv2
 
 from singan import SinGAN
 from log import TensorboardLogger
@@ -52,3 +53,4 @@ for i in range(args.super_scales):
     img = singan.test(target_size=target_size, injection=img, start_at_scale=0)
 
     imwrite(f'samples/{logger.run_name}/img_sr_{i+1}r.jpg', img)
+    imwrite(f'samples/{logger.run_name}/img_bilinear_{i+1}r.jpg', cv2.resize(train_img, target_size))
