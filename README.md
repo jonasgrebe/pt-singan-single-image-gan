@@ -93,6 +93,6 @@ training (512x512)         |       SinGAN  (1616x1616)     |         bilinear (1
 
 ### Single Image Animation
 
-training       |       Animation   |
+training       |       animation   |
 :-------------------------:|:-------------------------:|
-![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/lightning.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_lightning/animation.jpg)
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/lightning.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_lightning/animation.gif)
