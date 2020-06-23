@@ -12,6 +12,8 @@ parser = argparse.ArgumentParser()
 parser = argparse.ArgumentParser(description='SinGAN - Scale Injections')
 parser.add_argument('--run_name', required=True)
 parser.add_argument('--paint', required=True)
+parser.add_argument('--target_height', type=int, default=None)
+parser.add_argument('--target_width', type=int, default=None)
 
 parser.add_argument('--N', type=int, default=0)
 parser.add_argument('--img', default=None)
@@ -58,7 +60,13 @@ paint_size = paint_img.shape[:-1]
 if img_size:
     assert img_size == paint_size
 
+if args.target_height is None:
+    target_size = paint_size
+else:
+    assert args.target_width is not None
+    target_size = (args.target_height, args.target_width)
+
 # scale injections
 for scale in range(singan.N):
-    x = singan.test(target_size=paint_size, start_at_scale=scale, injection=paint_img)
+    x = singan.test(target_size=target_size, start_at_scale=scale, injection=paint_img)
     imwrite(f'samples/{logger.run_name}/paint_{args.paint.replace(".jpg", "")}_{scale}.jpg', x)
