@@ -83,4 +83,16 @@ Scale 5         |         Scale 6          |         Scale 7           |        
 training (512x512)         |       SinGAN  (1616x1616)     |         bilinear (1616x1616)          |  
 :-------------------------:|:-------------------------:|:-------------------------:|
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_bilinear_4r.jpg)
-![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/856-zebra-in-savanna.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_bilinear_4r.jpg) 
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/856-zebra-in-savanna.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_bilinear_4r.jpg)
+
+----
+
+### Paint2Image
+
+----
+
+### Single Image Animation
+
+training       |       Animation   |
+:-------------------------:|:-------------------------:|
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/lightning.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_lightning/animation.jpg)
