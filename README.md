@@ -2,6 +2,10 @@
 
 [WIP] Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
 
+<a href="https://github.com/jonasgrebe/pt-singan-single-image-gan/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
+</a>
+
 ## Note
 - Inner Steps in the Official Implementation?
 - Spectral Normalization instead of Gradient Penalty? Other Loss Functions?
