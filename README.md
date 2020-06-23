@@ -6,12 +6,6 @@
   <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
 </a>
 
-## Note
-- Inner Steps in the Official Implementation?
-- Spectral Normalization instead of Gradient Penalty? Other Loss Functions?
-- Deformable Convolutions in Generator/Discriminator?
-
-
 ## How to use
 
 For each of the exemplary SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the --not_pretrained flag together with the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model with 8 scales and 2000 steps per scale:
