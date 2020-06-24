@@ -6,6 +6,13 @@
   <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
 </a>
 
+## TODOs
+
+- weight initialization via copy of previous scale
+- experiment with other techniques like spectral norm
+- experiment with more complex model blocks
+- experiment with other loss functions 
+
 ## How to use
 
 For each of the exemplary SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the --not_pretrained flag together with the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model with 8 scales and 2000 steps per scale:
