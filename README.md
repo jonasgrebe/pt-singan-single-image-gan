@@ -6,6 +6,14 @@
   <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
 </a>
 
+## TODOs
+
+- weight initialization via copy of previous scale
+- play around with weights of losses: reconstruction loss, gan loss, gradient penalty
+- experiment with other techniques like spectral norm
+- experiment with more complex model blocks
+- experiment with other loss functions 
+
 ## How to use
 
 For each of the exemplary SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the --not_pretrained flag together with the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model with 8 scales and 2000 steps per scale:
@@ -46,7 +54,7 @@ python paint2image.py --run_name <String> --paint 5026_1.jpg
 python animate.py --run_name <String> --frames <int> --fps <int> --alpha 0.1 --beta 0.9 --start_at_scale <int>
 ```
 
-## Example results
+## Current example results
 
 ### Random Sampling
 
