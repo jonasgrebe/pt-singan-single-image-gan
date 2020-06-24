@@ -89,6 +89,7 @@ Scale 5/10         |         Scale 6/10          |         Scale 7/10           
 training (512x512)         |       SinGAN  (1616x1616)     |         bilinear (1616x1616)          |  
 :-------------------------:|:-------------------------:|:-------------------------:|
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/img_bilinear_4r.jpg)
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5739-black-nike-slide-sandals-on-swimming-pool.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/img_bilinear_4r.jpg)
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/856-zebra-in-savanna.jpg) | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_sr_4r.jpg) | ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_856/img_bilinear_4r.jpg)
 
 ----
@@ -97,6 +98,11 @@ training (512x512)         |       SinGAN  (1616x1616)     |         bilinear (1
 training       |       paint   |   Scale 7/9   |    Scale 9/9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5026-green-fern-plant-during-daytime.jpg)  | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5026_1.jpg)| ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_7.jpg) | ![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5026/paint_5026_1_9.jpg)
+
+training       |       paint   |   Scale 6/9   |    Scale 9/9
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5739-black-nike-slide-sandals-on-swimming-pool.jpg)  | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5793_0.jpg)| ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/paint_5793_0_6.jpg) | ![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/paint_5793_0_9.jpg)
+----
 
 training       |       paint   |   Scale 6/9   |    Scale 9/9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
