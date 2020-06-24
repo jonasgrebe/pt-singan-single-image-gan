@@ -85,6 +85,12 @@ class SinGAN:
                                               min_channels=self.hypers['min_n_channels'],
                                               n_blocks=self.hypers['n_blocks']).to(self.device)
 
+            # initialize weights via copy if possible
+            if (p-1) // 4 == p // 4:
+                new_generator.load_state_dict(self.g_pyramid[0].state_dict())
+                new_discriminator.load_state_dict(self.d_pyramid[0].state_dict())
+
+
             # reset the optimizers
             self.g_optimizer = torch.optim.Adam(new_generator.parameters(), lr=self.hypers['g_lr'], betas=[0.5, 0.999])
             self.d_optimizer = torch.optim.Adam(new_discriminator.parameters(), lr=self.hypers['d_lr'], betas=[0.5, 0.999])
