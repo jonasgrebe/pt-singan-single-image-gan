@@ -54,7 +54,7 @@ python paint2image.py --run_name <String> --paint 5026_1.jpg
 python animate.py --run_name <String> --frames <int> --fps <int> --alpha 0.1 --beta 0.9 --start_at_scale <int>
 ```
 
-## Example results
+## Current example results
 
 ### Random Sampling
 
