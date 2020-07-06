@@ -2,23 +2,17 @@
 
 {% block content %}
     {{ block.super }}
-    <p>Welcome to the interactive page for experimenting with a <b>SinGAN</b>!</p>
-    <p>Please upload an image:</p>
+    <p>Welcome to the interactive webapp for experimenting with <b>SinGANs</b>!</p>
 
-    <div class="container">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Upload Image</label>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                            Browse… <input type="file" id="imgInp">
-                        </span>
-                    </span>
-                    <input type="text" class="form-control" readonly>
-                </div>
-                <img id='img-upload'/>
-            </div>
-        </div>
-    </div>
+    <h2>Select from some pre-trained models</h2>
+
+
+
+    <h2>Or train a new SinGAN</h2>
+    <form action="{% url 'submit-training-form' %}" method="post" enctype="multipart/form-data">
+        <label>Upload Image</label>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="button" value="Submit">
+    </form>
 {% endblock %}

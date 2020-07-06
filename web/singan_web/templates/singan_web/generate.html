@@ -1,0 +1,81 @@
+{% extends "singan_web/base.html" %}
+{% load static %}
+
+{% block content %}
+    {{ block.super }}
+    <h2>Now, you're free to generate your own images!</h2>
+    <p>Select a generation mode from the dropdown menu, adjust some parameters
+        and run the generation process. Have fun!</p>
+
+    <div id="generation-container" class="container-fluid">
+        <div class="row">
+            <div class="col-md">
+                <div class="col">
+                    <div class="container">
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ mode }}
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="{% url 'random-generation' %}">Random Generation</a>
+                                <a class="dropdown-item" href="{% url 'super-res' %}">Super Resolution</a>
+                                <a class="dropdown-item" href="{% url 'paint2image' %}">Paint-to-Image</a>
+                                <a class="dropdown-item" href="{% url 'harmonization' %}">Harmonization</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="generation-form" class="container">
+                        <form method="post" enctype="multipart/form-data">
+                            <p>{{ description }}</p>
+                            {% csrf_token %}
+                            {{ form }}
+                            <input type="submit" class="button" value="Generate">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="generation-result" class="col-lg">
+                <p id="progess-info">Initializing...</p>
+                <img id="generated-image" src="" alt="Generated Image">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let img = $('#generated-image');
+        let lbl = $('#progess-info');
+
+        function get_task_info(taskUrl) {
+            $.ajax({
+                type: 'get',
+                url: taskUrl,
+                success: function (data) {
+                    if (data.state === 'PENDING') {
+                        lbl.html('Please wait...');
+                    } else if (data.state === 'PROGRESS') {
+                        lbl.html('SinGAN is generating your image...');
+                    }
+                    if (data.state === 'SUCCESS') {
+                        lbl.html('');
+                        img.attr("src", data.result)
+                    }
+                    if (data.state !== 'SUCCESS') {
+                        setTimeout(function () {
+                            get_task_info(taskUrl)
+                        }, 1000);
+                    }
+                },
+                error: function (data) {
+                    lbl.html("Something went wrong!");
+                }
+            });
+        }
+
+        {% if task_id != None %}
+            get_task_info('{% url "get-task-info" task_id %}');
+        {% endif %}
+    </script>
+{% endblock %}

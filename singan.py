@@ -1,18 +1,19 @@
 from typing import Dict, Any, List, Tuple
 import torch
-import cv2
 import os
 import numpy as np
 
-from imageio import imread, imwrite
+from imageio import imwrite
 
 from models import SingleScaleGenerator, Discriminator
 from utils import freeze, gradient_penalty
 
+from celery import current_task
+
 
 class SinGAN:
 
-    def __init__(self, N, logger, r=4/3, device=torch.device('cpu'), hypers: Dict[str, Any] = {}) -> None:
+    def __init__(self, N, logger, r=4 / 3, device=torch.device('cpu'), hypers: Dict[str, Any] = {}) -> None:
         # target depth of the SinGAN is (N+1)
         self.N = N
         # scaling factor, > 1
@@ -30,14 +31,14 @@ class SinGAN:
 
         # default hyperparameters
         self.hypers = {
-            'g_lr': 5e-4, # learning rate for generators
-            'd_lr': 5e-4, # learning rate for discriminators
-            'n_blocks': 5, # number of convblocks in each of the N generators (modules)
-            'base_n_channels': 32, # base number of filters for the coarsest module
-            'min_n_channels': 32, # minimum number of filters in any layer of any module
-            'rec_loss_weight': 10.0, # alpha weight for reconstruction loss
-            'grad_penalty_weight': 0.1, # lambda weight for gradient penalty loss
-            'noise_weight': 0.1 # base standard deviation of gaussian noise
+            'g_lr': 5e-4,  # learning rate for generators
+            'd_lr': 5e-4,  # learning rate for discriminators
+            'n_blocks': 5,  # number of convblocks in each of the N generators (modules)
+            'base_n_channels': 32,  # base number of filters for the coarsest module
+            'min_n_channels': 32,  # minimum number of filters in any layer of any module
+            'rec_loss_weight': 10.0,  # alpha weight for reconstruction loss
+            'grad_penalty_weight': 0.1,  # lambda weight for gradient penalty loss
+            'noise_weight': 0.1  # base standard deviation of gaussian noise
         }
         # overwrite them with given hyperparameters
         self.hypers.update(hypers)
@@ -49,8 +50,15 @@ class SinGAN:
         # set the logger
         self.logger = logger
 
+        # for celery task tracking
+        self.done_steps = 0
+        self.total_steps = None
 
     def fit(self, img: np.ndarray, steps_per_scale: int = 2000) -> None:
+        # initialize task tracking parameters
+        self.total_steps = self.N * steps_per_scale
+        self.update_celery_state()
+
         # precompute all the sizes of the different scales
         target_size = img.shape[:-1]
 
@@ -69,8 +77,8 @@ class SinGAN:
         self.z_init = self.generate_random_noise(scale_sizes[:1])[0]
 
         # training progression
-        self.logger.set_scale(self.N+1)
-        for p in range(self.N+1):
+        self.logger.set_scale(self.N + 1)
+        for p in range(self.N + 1):
             self.logger.new_scale()
 
             # double number of initial channels every 4 scales
@@ -86,14 +94,14 @@ class SinGAN:
                                               n_blocks=self.hypers['n_blocks']).to(self.device)
 
             # initialize weights via copy if possible
-            if (p-1) // 4 == p // 4:
+            if (p - 1) // 4 == p // 4:
                 new_generator.load_state_dict(self.g_pyramid[0].state_dict())
                 new_discriminator.load_state_dict(self.d_pyramid[0].state_dict())
 
-
             # reset the optimizers
             self.g_optimizer = torch.optim.Adam(new_generator.parameters(), lr=self.hypers['g_lr'], betas=[0.5, 0.999])
-            self.d_optimizer = torch.optim.Adam(new_discriminator.parameters(), lr=self.hypers['d_lr'], betas=[0.5, 0.999])
+            self.d_optimizer = torch.optim.Adam(new_discriminator.parameters(), lr=self.hypers['d_lr'],
+                                                betas=[0.5, 0.999])
 
             # insert new generator and discriminator at the bottom of the pyramids
             self.g_pyramid.insert(0, new_generator)
@@ -110,19 +118,22 @@ class SinGAN:
             self.g_pyramid[0].eval()
             self.d_pyramid[0].eval()
 
-
     def fit_single_scale(self, img: np.ndarray, target_size: Tuple[int, int], steps: int) -> None:
-        real = torch.nn.functional.interpolate(img, target_size, mode='bilinear', align_corners=True).float().to(self.device)
+        real = torch.nn.functional.interpolate(img, target_size, mode='bilinear', align_corners=True).float().to(
+            self.device)
 
         # paragraph below equation (5) in paper
         if self.last_rec is not None:
             # compute root mean squared error between upsampled version of rec from last scale and the real target of the current scale
-            rmse = torch.sqrt(torch.nn.functional.mse_loss(real, torch.nn.functional.interpolate(self.last_rec, target_size, mode='bilinear', align_corners=True)))
+            rmse = torch.sqrt(torch.nn.functional.mse_loss(real,
+                                                           torch.nn.functional.interpolate(self.last_rec, target_size,
+                                                                                           mode='bilinear',
+                                                                                           align_corners=True)))
             self.rmses.insert(0, rmse.detach().cpu().numpy().item())
         print(self.rmses)
 
         self.logger.set_mode('training')
-        for step in range(1, steps+1):
+        for step in range(1, steps + 1):
             self.logger.new_step()
 
             # ====== train discriminator =======================================
@@ -145,7 +156,8 @@ class SinGAN:
             adv_d_real_loss.backward()
 
             # gradient penalty loss
-            grad_penalty = gradient_penalty(self.d_pyramid[0], real, fake, self.device) * self.hypers['grad_penalty_weight']
+            grad_penalty = gradient_penalty(self.d_pyramid[0], real, fake, self.device) * self.hypers[
+                'grad_penalty_weight']
             grad_penalty.backward()
 
             # make a step against the gradient
@@ -162,7 +174,7 @@ class SinGAN:
             adv_g_loss.backward()
 
             # reconstruct original image with fixed z_init and else no noise
-            rec = self.forward_g_pyramid(target_size=target_size, Z=[self.z_init]+[0]*(len(self.g_pyramid)-1))
+            rec = self.forward_g_pyramid(target_size=target_size, Z=[self.z_init] + [0] * (len(self.g_pyramid) - 1))
 
             # reconstruction loss
             rec_g_loss = torch.nn.functional.mse_loss(rec, real) * self.hypers['rec_loss_weight']
@@ -179,7 +191,11 @@ class SinGAN:
             }
 
             self.logger.log_losses(loss_dict)
-            print(f'[{self.N-len(self.g_pyramid)+1}: {step}|{steps}] -', loss_dict)
+            print(f'[{self.N - len(self.g_pyramid) + 1}: {step}|{steps}] -', loss_dict)
+
+            # increment counter for task progress tracking
+            self.done_steps += 1
+            self.update_celery_state()
 
         # save current reconstruction of this scale temporally
         self.last_rec = rec
@@ -196,14 +212,16 @@ class SinGAN:
             run_dir = os.path.join('samples', self.logger.run_name)
             if not os.path.isdir(run_dir):
                 os.makedirs(run_dir)
-            imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_{step}.jpg'), fake)
+            imwrite(os.path.join(run_dir, f'{self.N - len(self.g_pyramid) + 1}_{step}.jpg'), fake)
 
         # save reconstruction of real image and downscaled copy of real image
-        imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_rec.jpg'), self.transform_output(rec[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
-        imwrite(os.path.join(run_dir, f'{self.N-len(self.g_pyramid)+1}_real.jpg'), self.transform_output(real[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
+        imwrite(os.path.join(run_dir, f'{self.N - len(self.g_pyramid) + 1}_rec.jpg'),
+                self.transform_output(rec[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
+        imwrite(os.path.join(run_dir, f'{self.N - len(self.g_pyramid) + 1}_real.jpg'),
+                self.transform_output(real[0].detach().cpu().numpy().transpose(1, 2, 0)).astype('uint8'))
 
-
-    def test(self, target_size: Tuple[int, int], Z: List[torch.Tensor] = None, injection: np.ndarray = None, start_at_scale: int = None) -> torch.Tensor:
+    def test(self, target_size: Tuple[int, int], Z: List[torch.Tensor] = None, injection: np.ndarray = None,
+             start_at_scale: int = None) -> torch.Tensor:
         # preprocess injection image and pack it in a batch
         if injection is not None:
             injection = torch.from_numpy(injection.transpose(2, 0, 1))
@@ -218,8 +236,8 @@ class SinGAN:
         x = self.transform_output(x).astype('uint8')
         return x
 
-
-    def forward_g_pyramid(self, target_size: Tuple[int, int], start_at_scale: int = None, Z: List[torch.Tensor] = None, injection: np.ndarray = None) -> torch.Tensor:
+    def forward_g_pyramid(self, target_size: Tuple[int, int], start_at_scale: int = None, Z: List[torch.Tensor] = None,
+                          injection: np.ndarray = None) -> torch.Tensor:
 
         # default starting scale to the coarsest scale
         if start_at_scale is None:
@@ -246,10 +264,11 @@ class SinGAN:
         Z = Z_rand
 
         # inject the image at the starting scale if necessary
-        x = injection if start_at_scale != len(self.g_pyramid)-1 else None
+        x = injection if start_at_scale != len(self.g_pyramid) - 1 else None
 
         # for each scale from the starting scale upwards
-        for z, size, rmse, generator in zip(Z, scale_sizes, self.rmses[:start_at_scale+1][::-1], self.g_pyramid[:start_at_scale+1][::-1]):
+        for z, size, rmse, generator in zip(Z, scale_sizes, self.rmses[:start_at_scale + 1][::-1],
+                                            self.g_pyramid[:start_at_scale + 1][::-1]):
 
             # make sure that z has the correct size
             z = torch.nn.functional.interpolate(z, size, mode='bilinear', align_corners=True)
@@ -265,24 +284,21 @@ class SinGAN:
                 x = torch.nn.functional.interpolate(x, size, mode='bilinear', align_corners=True)
             else:
                 # if no previous output is given, set it zero
-                x = torch.zeros(size=(1, 3,)+size)
+                x = torch.zeros(size=(1, 3,) + size)
 
             # feed noise map and image through current generator to obtain new image
             x = generator(z.to(self.device), x.to(self.device)).clamp(min=-1, max=1)
 
         return x
 
-
     def generate_random_noise(self, sizes: List[Tuple[int, int]], type: str = 'gaussian'):
         if type == 'gaussian':
-            return [torch.randn(size=(1, 3,)+size) for size in sizes]
-
+            return [torch.randn(size=(1, 3,) + size) for size in sizes]
 
     def compute_scale_sizes(self, target_size, start_at_scale=None):
         if start_at_scale is None:
             start_at_scale = self.N
         return [tuple((np.array(target_size) // self.r ** n).astype(int)) for n in range(start_at_scale, -1, -1)]
-
 
     def save_checkpoint(self) -> None:
         # create the checkpoint directory if it does not exist
@@ -303,7 +319,6 @@ class SinGAN:
         # save the checkpoint
         torch.save(checkpoint, os.path.join(checkpoint_dir, f'{self.logger.run_name}.ckpt'))
 
-
     def load_checkpoint(self, run_name: str) -> None:
         # load the checkpoint of SinGAN
         checkpoint_dir = os.path.join(self.logger.log_dir, 'checkpoints')
@@ -319,4 +334,10 @@ class SinGAN:
         self.rmses = checkpoint['rmses']
 
         # inform the logger about the restored epoch
-        self.logger.set_scale(self.N-len(self.g_pyramid)+1)
+        self.logger.set_scale(self.N - len(self.g_pyramid) + 1)
+
+    def update_celery_state(self):
+        current_task.update_state(state='PROGRESS',
+                                  meta={'current': self.done_steps,
+                                        'total': self.total_steps,
+                                        'percent': int((self.done_steps / self.total_steps) * 100)})
