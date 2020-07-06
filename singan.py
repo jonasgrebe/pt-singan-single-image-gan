@@ -49,6 +49,7 @@ class SinGAN:
 
         # set the logger
         self.logger = logger
+        self.train_img = None
 
         # for celery task tracking
         self.done_steps = 0
@@ -61,6 +62,7 @@ class SinGAN:
 
         # precompute all the sizes of the different scales
         target_size = img.shape[:-1]
+        self.train_img = img
 
         # compute scales sizes
         scale_sizes = self.compute_scale_sizes(target_size)
@@ -314,7 +316,8 @@ class SinGAN:
             'g_pyramid': self.g_pyramid,
             'd_pyramid': self.d_pyramid,
             'z_init': self.z_init,
-            'rmses': self.rmses
+            'rmses': self.rmses,
+            'train_img': self.train_img,
         }
         # save the checkpoint
         torch.save(checkpoint, os.path.join(checkpoint_dir, f'{self.logger.run_name}.ckpt'))
@@ -332,6 +335,9 @@ class SinGAN:
         self.d_pyramid = checkpoint['d_pyramid']
         self.z_init = checkpoint['z_init']
         self.rmses = checkpoint['rmses']
+
+        if 'train_img' in checkpoint:
+            self.train_img = checkpoint['train_img']
 
         # inform the logger about the restored epoch
         self.logger.set_scale(self.N - len(self.g_pyramid) + 1)

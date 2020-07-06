@@ -126,6 +126,7 @@ dmypy.json
 *.0
 
 # logs
-logs/
+logs/singan_*
 
 tmp/
+checkpoint_converter.py
