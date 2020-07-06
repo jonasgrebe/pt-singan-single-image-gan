@@ -129,3 +129,4 @@ dmypy.json
 logs/singan_*
 
 tmp/
+checkpoint_converter.py
