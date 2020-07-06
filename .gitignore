@@ -126,6 +126,6 @@ dmypy.json
 *.0
 
 # logs
-logs/
+logs/singan_*
 
 tmp/
