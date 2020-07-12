@@ -1,0 +1,72 @@
+{% extends "singan_web/base.html" %}
+{% load fontawesome_5 %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="welcome-container" class="container">
+        <h5 style="text-align: center">Welcome to the interactive webapp for experimenting with
+            <a href="https://arxiv.org/abs/1905.01164" target="_blank">SinGANs</a>!</h5>
+
+        <h3>Pick a pre-trained model</h3>
+        <div id="pretrained-container" class="container">
+            {% for image_path in image_paths %}
+                <a href="{% url 'load-pretrained' forloop.counter0 %}">
+                    <img src="{{ image_path }}" alt="{{ image_path }}" class="img-thumbnail pretrained-image"
+                         style="height: 10em">
+                </a>
+            {% endfor %}
+        </div>
+
+        <h3>Or train a new SinGAN</h3>
+        <p>Here, you can upload an own image and train a new SinGAN with given training parameters.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <form id="training-image-dropzone" action="{% url 'upload-training-image' %}" class="dropzone">
+                    {% csrf_token %}
+                    <div class="dz-message" data-dz-message style="opacity: 50%">
+                        <i class="far fa-image fa-5x"></i>
+                        <p>Drop a training image here</p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <form action="{% url 'submit-training-form' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md">{{ form.scales|as_crispy_field }}</div>
+                    <div class="col-md">{{ form.steps_per_scale|as_crispy_field }}</div>
+                    <div class="col-md">{{ form.rescale_factor|as_crispy_field }}</div>
+                    <button type="submit" class="btn btn-secondary">
+                        {% fa5_icon 'play' 'fa' %}
+                        Submit
+                    </button>
+                </form>
+                {% if error_msg != None %}
+                    <p style="color: red">{{ error_msg }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        Dropzone.options.trainingImageDropzone = {
+            paramName: "training_image",
+            maxFilesize: 50, // MB
+            acceptedFiles: "image/*",
+            thumbnailHeight: 350,
+            thumbnailWidth: null,
+            resizeWidth: 800,
+            accept: function (file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function () {
+                this.on("addedfile", function () {
+                    if (this.files.length > 1) {
+                        this.removeFile(this.files[0]);
+                    }
+                });
+            }
+        };
+    </script>
+{% endblock %}

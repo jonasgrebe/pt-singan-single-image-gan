@@ -14,6 +14,23 @@
 - experiment with more complex model blocks
 - experiment with other loss functions 
 
+## The web application
+
+### Setup
+In order to execute the web application on your local computer, you need to do the following.
+1. Install all packages from the `requirements.txt`.
+2. Install the RabbitMQ message broker from [their website](https://www.rabbitmq.com/install-windows.html#service).
+3. Run the RabbitMQ Service, then open a terminal and configure RabbitMQ by entering the following four commands:
+   * `rabbitmqctl.bat add_user aibirds aibirds`
+   * `rabbitmqctl.bat add_vhost aibirdshost`
+   * `rabbitmqctl.bat set_user_tags aibirds aibirdstag`
+   * `rabbitmqctl.bat set_permissions -p aibirdshost aibirds ".*" ".*" ".*" `
+4. In the project's root directory, go into the folder `web`, open a terminal here and run `python manage.py runserver` 
+to run the Django server.
+5. In the same folder (`web`) open another terminal and execute the Celery worker process by entering
+`celery -A web worker --pool=solo -l info`
+6. Finally, in your browser, open [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+
 ## How to use
 
 For each of the exemplary SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the --not_pretrained flag together with the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model with 8 scales and 2000 steps per scale:
