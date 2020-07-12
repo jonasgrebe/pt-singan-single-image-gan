@@ -1,22 +1,33 @@
 {% extends "singan_web/base.html" %}
 {% load static %}
+{% load fontawesome_5 %}
 
 {% block content %}
     {{ block.super }}
-    <h2>SinGAN ist training on your image.</h2>
+    <div class="container" style="text-align: center">
+        <h3>SinGAN ist training on your image.</h3>
 
-    <img src="{{ image_model.image.url }}" alt="Uploaded image" class="img-thumbnail" id="img-upload">
+        <img src="{{ image_path }}" alt="Uploaded image" class="img-thumbnail" id="img-upload">
 
-    {{ task_id }}
+        <div style="display: flex; align-items: center; justify-content: center">
+            <div class="progress" style="width: 60em">
+                <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+                     role="progressbar"
+                     aria-valuenow="75"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+            </div>
+            <a href="{% url 'cancel-training' task_id %}" style="margin-left: 1em; text-decoration: none; color: white">
+                <i>{% fa5_icon 'times' 'fa' %}</i>
+            </a>
+        </div>
 
-    <div class="progress">
-        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-             aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+        <div id="progress-label"></div>
+
+        <h5 style="margin-top: 2em">This may take a while, depending on your training parameters, up to 3 hours.</h5>
+
+        <h5>In the meantime, you may take a look at the <a href="https://arxiv.org/abs/1905.01164" target="_blank">
+            original SinGAN paper</a> by Shaham et al.</h5>
     </div>
-
-    <div id="progress-label"></div>
-
-    <p>This may take a while (up to 3 h). In the meantime you may take a look at...</p>
 
     <script type="text/javascript">
         var pgrbar = $('#progress-bar');
@@ -30,8 +41,7 @@
                     lbl.html('');
                     if (data.state === 'PENDING') {
                         lbl.html('Please wait...');
-                    }
-                    else if (data.state === 'PROGRESS' || data.state === 'SUCCESS') {
+                    } else if (data.state === 'PROGRESS' || data.state === 'SUCCESS') {
                         pgrbar.css('width', data.result.percent + '%');
                         pgrbar.html(data.result.percent + ' %');
                         lbl.html('Steps computed: ' + data.result.current + ' out of ' + data.result.total);
@@ -47,6 +57,7 @@
                 },
                 error: function (data) {
                     lbl.html("Something went wrong!");
+                    lbl.css("color", "red")
                 }
             });
         }

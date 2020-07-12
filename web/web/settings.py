@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'progress_tracking',
+    'crispy_forms',
+    'fontawesome_5',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,5 @@ CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
