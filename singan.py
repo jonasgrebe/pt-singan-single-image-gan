@@ -57,7 +57,7 @@ class SinGAN:
 
     def fit(self, img: np.ndarray, steps_per_scale: int = 2000) -> None:
         # initialize task tracking parameters
-        self.total_steps = self.N * steps_per_scale
+        self.total_steps = (self.N + 1) * steps_per_scale
         self.update_celery_state()
 
         # precompute all the sizes of the different scales
@@ -347,3 +347,24 @@ class SinGAN:
                                   meta={'current': self.done_steps,
                                         'total': self.total_steps,
                                         'percent': int((self.done_steps / self.total_steps) * 100)})
+
+
+def load_pretrained(checkpoint_path) -> SinGAN:
+    """Used to load a pretrained SinGAN. It cannot be used for training."""
+
+    # load the checkpoint of SinGAN
+    checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
+
+    singan = SinGAN(N=checkpoint['N'], logger=None, r=checkpoint['r'])
+
+    # restore the information from the checkpoint
+    singan.hypers = checkpoint['hypers']
+    singan.g_pyramid = checkpoint['g_pyramid']
+    singan.d_pyramid = checkpoint['d_pyramid']
+    singan.z_init = checkpoint['z_init']
+    singan.rmses = checkpoint['rmses']
+
+    if 'train_img' in checkpoint:
+        singan.train_img = checkpoint['train_img']
+
+    return singan

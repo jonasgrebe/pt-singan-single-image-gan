@@ -1,23 +1,223 @@
-.btn-file {
-    position: relative;
-    overflow: hidden;
+:root {
+    --blue: #375a7f;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #E74C3C;
+    --orange: #fd7e14;
+    --yellow: #F39C12;
+    --green: #00bc8c;
+    --teal: #20c997;
+    --cyan: #3498DB;
+    --white: #fff;
+    --gray: #888;
+    --gray-dark: #303030;
+    --primary: #375a7f;
+    --secondary: #444;
+    --success: #00bc8c;
+    --info: #3498DB;
+    --warning: #F39C12;
+    --danger: #E74C3C;
+    --light: #adb5bd;
+    --dark: #303030;
+    --medium-dark: #373737;
 }
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
+
+h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+#title {
+    color: inherit;
+    text-decoration: none;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.numberinput, .select {
+    background-color: var(--dark);
+    color: white;
+}
+
+.numberinput:active, .select:active {
+    background-color: var(--medium-dark);
+    color: white;
+}
+
+.numberinput:focus, .select:focus {
+    background-color: var(--medium-dark);
+    color: white;
+}
+
+.select {
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+    background-image:
+            linear-gradient(45deg, transparent 50%, gray 50%),
+            linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+            calc(100% - 20px) calc(1em + 2px),
+            calc(100% - 15px) calc(1em + 2px);
+    background-size:
+            5px 5px,
+            5px 5px;
+    background-repeat: no-repeat;
+}
+
+.select:focus {
+    background-image:
+            linear-gradient(45deg, white 50%, transparent 50%),
+            linear-gradient(135deg, transparent 50%, white 50%);
+    background-position:
+            calc(100% - 15px) 1em,
+            calc(100% - 20px) 1em;
+    background-size:
+            5px 5px,
+            5px 5px;
+    background-repeat: no-repeat;
+    outline: 0;
+}
+
+option:hover {
+    box-shadow: 0 0 10px 100px var(--primary) inset;
+}
+
+.numberinput {
+    -moz-appearance: textfield;
+}
+
+.numberinput::-webkit-outer-spin-button,
+.numberinput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#welcome-container {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#base-container {
+    padding-top: 2em;
+    padding-bottom: 4em;
+}
+
+.img-thumbnail {
+    border-color: var(--gray);
+}
+
+#generation-container {
+    margin-top: 4em;
+}
+
+#generation-mode-container {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+#image-placeholder {
+    opacity: 50%;
+    font-size: 8em;
+}
+
+#generation-result {
+    text-align: center;
+}
+
+#generation-form {
+    padding-bottom: 2em;
+}
+
+#loading-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+i.fa {
+    margin-right: 0.5em;
+}
+
+.dropzone {
+    background-color: var(--gray-dark);
+    border: 4px dashed var(--gray);
+    border-radius: 20px;
+}
+
+#training-image-dropzone {
+    height: 18em;
+}
+
+#input-image-dropzone {
+    height: 16em;
+    margin: 2em;
+}
+
+.dropzone {
+    text-align: center;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone .dz-preview {
+    margin: 0;
+}
+
+.dropzone .dz-preview {
+    height: 100%;
+    max-width: 100%;
+}
+
+.dropzone .dz-processing {
+    width: 50%;
+}
+
+.dropzone .dz-complete {
+    width: auto;
+}
+
+.dropzone .dz-preview .dz-image {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+}
+
+.dropzone .dz-preview .dz-image img {
+    height: 100%;
+}
+
+.dropzone .dz-preview .dz-details {
+    height: 100%;
+    width: 100%;
+}
+
+.dz-preview.dz-image-preview {
+    background: transparent !important;
+}
+
+#generated-image {
+    max-height: 30em;
 }
 
 #img-upload {
-    width: 12em;
+    height: 30em;
+    margin-bottom: 1em;
+}
+
+.pretrained-image {
+    margin-right: 1em;
+    margin-bottom: 1em;
+
+    transition: transform 300ms;
+}
+
+.pretrained-image:hover {
+    transform: scale(1.8, 1.8);
+    transition: transform 300ms;
+    z-index: 1;
 }

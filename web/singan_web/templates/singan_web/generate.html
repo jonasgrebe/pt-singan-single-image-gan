@@ -1,52 +1,79 @@
 {% extends "singan_web/base.html" %}
 {% load static %}
+{% load fontawesome_5 %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     {{ block.super }}
-    <h2>Now, you're free to generate your own images!</h2>
-    <p>Select a generation mode from the dropdown menu, adjust some parameters
-        and run the generation process. Have fun!</p>
 
     <div id="generation-container" class="container-fluid">
         <div class="row">
-            <div class="col-md">
-                <div class="col">
-                    <div class="container">
-                        <div class="dropdown show">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ mode }}
-                            </a>
+            <div class="col-sm">
+                <div id="generation-mode-container" class="container">
+                    <div class="dropdown show">
+                        <a class="btn btn-lg btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ mode }}
+                        </a>
 
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="{% url 'random-generation' %}">Random Generation</a>
-                                <a class="dropdown-item" href="{% url 'super-res' %}">Super Resolution</a>
-                                <a class="dropdown-item" href="{% url 'paint2image' %}">Paint-to-Image</a>
-                                <a class="dropdown-item" href="{% url 'harmonization' %}">Harmonization</a>
-                            </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'random-generation' %}">Random Generation</a>
+                            <a class="dropdown-item" href="{% url 'super-res' %}">Super Resolution</a>
+                            <a class="dropdown-item" href="{% url 'paint2image' %}">Paint-to-Image</a>
+                            <a class="dropdown-item" href="{% url 'harmonization' %}">Harmonization</a>
+                            <a class="dropdown-item" href="{% url 'injection' %}">Injection</a>
                         </div>
                     </div>
+                </div>
 
-                    <div id="generation-form" class="container">
-                        <form method="post" enctype="multipart/form-data">
-                            <p>{{ description }}</p>
+                <div id="generation-form" class="container">
+                    <p>{{ description }}</p>
+
+                    {% if show_image_upload %}
+                        <form id="input-image-dropzone" action="{% url 'upload-input-image' %}" class="dropzone">
                             {% csrf_token %}
-                            {{ form }}
-                            <input type="submit" class="button" value="Generate">
+                            <div class="dz-message" data-dz-message style="opacity: 50%">
+                                <i class="far fa-image fa-5x"></i>
+                                <p>Drop an input image here</p>
+                            </div>
                         </form>
-                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {% if mode != 'Select a mode' %}
+                            <button id="generation-button" type="submit" class="btn btn-secondary">
+                                {% fa5_icon 'image' 'fa' %}
+                                Generate
+                            </button>
+                        {% else %}
+                            <h5>Now, you're free to generate your own images!</h5>
+                            <p>Select a generation mode from the dropdown menu, adjust some parameters
+                                and run the generation process. Have fun!</p>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
-            <div id="generation-result" class="col-lg">
-                <p id="progess-info">Initializing...</p>
-                <img id="generated-image" src="" alt="Generated Image">
+
+            <div id="generation-result" class="col-lg" style="margin: auto;">
+                <i id="image-placeholder" class="far fa-image fa-5x"></i>
+                <div id="loading-info">
+                    <i id="loading-spinner" class="fa fa-spinner fa-spin fa-lg fa-fw"
+                       style="display: none; margin-right: 0.5em"></i>
+                    <p id="loading-label" style="display: block; margin-top: auto; margin-bottom: auto">Your generated
+                        image will be located here.</p>
+                </div>
+                <img id="generated-image" src="" alt="Generated Image" style="width: 100%; display: none">
             </div>
         </div>
     </div>
 
     <script type="text/javascript">
         let img = $('#generated-image');
-        let lbl = $('#progess-info');
+        let lbl = $('#loading-label');
+        let spn = $('#loading-spinner');
+        let phd = $('#image-placeholder');
 
         function get_task_info(taskUrl) {
             $.ajax({
@@ -54,12 +81,14 @@
                 url: taskUrl,
                 success: function (data) {
                     if (data.state === 'PENDING') {
-                        lbl.html('Please wait...');
-                    } else if (data.state === 'PROGRESS') {
-                        lbl.html('SinGAN is generating your image...');
+                        spn.css("display", "block")
+                        lbl.html('Please wait. SinGAN is generating...');
                     }
                     if (data.state === 'SUCCESS') {
-                        lbl.html('');
+                        lbl.css("display", "none")
+                        spn.css("display", "none")
+                        phd.css("display", "none")
+                        img.css("display", "block")
                         img.attr("src", data.result)
                     }
                     if (data.state !== 'SUCCESS') {
@@ -69,6 +98,8 @@
                     }
                 },
                 error: function (data) {
+                    spn.css("display", "none")
+                    phd.css("display", "none")
                     lbl.html("Something went wrong!");
                 }
             });
@@ -77,5 +108,43 @@
         {% if task_id != None %}
             get_task_info('{% url "get-task-info" task_id %}');
         {% endif %}
+
+        {% if mode == "Paint-to-Image" or mode == "Harmonization" %}
+            document.querySelector("#generation-button").setAttribute("disabled", "");
+            document.querySelector("#generation-button").classList.add("disabled");
+        {% endif %}
+
+        Dropzone.options.inputImageDropzone = {
+            paramName: "input_image",
+            maxFilesize: 5, // MB
+            acceptedFiles: "image/*",
+            thumbnailHeight: 350,
+            thumbnailWidth: null,
+            accept: function (file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function () {
+                {% if mode == "Super Resolution" or mode == "Injection" %}
+                    let mockFile = { name: 'Input image', size: 12345, type: 'image/jpeg' };
+                    this.emit("addedfile", mockFile);
+                    this.emit("success", mockFile);
+                    this.emit("complete", mockFile);
+                    this.emit("thumbnail", mockFile, "{{ input_image_url }}")
+                    this.files.push(mockFile)
+                    document.querySelector(".dz-progress").style.display = 'none';
+                    document.querySelector(".dz-success-mark").style.display = 'none';
+                {% endif %}
+
+                this.on("addedfile", function () {
+                    document.querySelector(".dz-success-mark").style.display = 'block';
+                    if (this.files.length > 1) {
+                        this.removeFile(this.files[0]);
+                    }
+                    document.querySelector("#generation-button").removeAttribute("disabled");
+                    document.querySelector("#generation-button").classList.remove("disabled");
+                });
+            }
+        };
     </script>
 {% endblock %}
