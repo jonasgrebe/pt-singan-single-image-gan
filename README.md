@@ -6,14 +6,6 @@
   <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
 </a>
 
-## TODOs
-
-- weight initialization via copy of previous scale
-- play around with weights of losses: reconstruction loss, gan loss, gradient penalty
-- experiment with other techniques like spectral norm
-- experiment with more complex model blocks
-- experiment with other loss functions 
-
 ## The web application
 
 ### Setup
