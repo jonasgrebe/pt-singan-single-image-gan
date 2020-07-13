@@ -1,18 +1,10 @@
 # pt-singan-single-image-gan
 
-[WIP] Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
+Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model from a Single Natural Image](https://arxiv.org/pdf/1905.01164.pdf)"__ as a project for the _Deep Generative Models_ lecture at TU Darmstadt SS2020.
 
 <a href="https://github.com/jonasgrebe/pt-singan-single-image-gan/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=jonasgrebe/pt-singan-single-image-gan" />
 </a>
-
-## TODOs
-
-- weight initialization via copy of previous scale
-- play around with weights of losses: reconstruction loss, gan loss, gradient penalty
-- experiment with other techniques like spectral norm
-- experiment with more complex model blocks
-- experiment with other loss functions 
 
 ## The web application
 
@@ -21,22 +13,22 @@ In order to execute the web application on your local computer, you need to do t
 1. Install all packages from the `requirements.txt`.
 2. Install the RabbitMQ message broker from [their website](https://www.rabbitmq.com/install-windows.html#service).
 3. Run the RabbitMQ Service, then open a terminal and configure RabbitMQ by entering the following four commands:
-   * `rabbitmqctl.bat add_user aibirds aibirds`
-   * `rabbitmqctl.bat add_vhost aibirdshost`
-   * `rabbitmqctl.bat set_user_tags aibirds aibirdstag`
-   * `rabbitmqctl.bat set_permissions -p aibirdshost aibirds ".*" ".*" ".*" `
+   * `rabbitmqctl.bat add_user singan singan`
+   * `rabbitmqctl.bat add_vhost singan_host`
+   * `rabbitmqctl.bat set_user_tags singan singan_tag`
+   * `rabbitmqctl.bat set_permissions -p singan_host singan ".*" ".*" ".*" `
 4. In the project's root directory, go into the folder `web`, open a terminal here and run `python manage.py runserver` 
 to run the Django server.
 5. In the same folder (`web`) open another terminal and execute the Celery worker process by entering
 `celery -A web worker --pool=solo -l info`
 6. Finally, in your browser, open [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-## How to use
+## How to use without the UI
 
-For each of the exemplary SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the --not_pretrained flag together with the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model with 8 scales and 2000 steps per scale:
+For each of the SinGAN applications, we created an easy-to-use python script that can be run directly from the console by specifying the necessary parameters. All of these scripts have in common that they require either just the run_name of a pretrained SinGAN model or the ```--not_pretrained``` flag together with the training image path, the number of scales N and the number of steps per scale. For instance, the following additional command line arguments would train a SinGAN model on the green fern plant image with 8 scales and 2000 steps per scale:
 
 ```console
-python application.py [...] --not_pretrained --N 8 --steps_per_scale 2000
+python application.py [...] --not_pretrained --img 5026-green-fern-plant-during-daytime.jpg --N 8 --steps_per_scale 2000
 ```
 
 If the not_pretrained flag is not given but a trained model with the identifier run_name exists, this is used instead.
@@ -44,19 +36,19 @@ If the not_pretrained flag is not given but a trained model with the identifier 
 ### Random Sampling
 
 ```console
-python sample.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg -- height <int> --width <int>
+python sample.py --run_name <String> -- height <int> --width <int>
 ```
 
 ### Scale Injection
 
 ```console
-python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg
+python scale_injections.py --run_name <String>
 ```
 
 ### Super Resolution
 
 ```console
-python scale_injections.py --run_name <String> --img 5026-green-fern-plant-during-daytime.jpg --super_scales <int>
+python scale_injections.py --run_name <String> --super_scales <int>
 ```
 
 ### Paint2Image
