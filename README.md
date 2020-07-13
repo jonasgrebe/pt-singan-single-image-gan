@@ -8,6 +8,8 @@ Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model f
 
 ## The web application
 
+<img src="https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/img/ui.jpg" width="1000">
+
 ### Setup
 In order to execute the web application on your local computer, you need to do the following.
 1. Install all packages from the `requirements.txt`.
@@ -31,7 +33,7 @@ For each of the SinGAN applications, we created an easy-to-use python script tha
 python application.py [...] --not_pretrained --img 5026-green-fern-plant-during-daytime.jpg --N 8 --steps_per_scale 2000
 ```
 
-If the not_pretrained flag is not given but a trained model with the identifier run_name exists, this is used instead.
+If the ```--not_pretrained``` flag is not given but a trained model with the identifier ```run_name``` exists, this is used instead.
 
 ### Random Sampling
 
@@ -52,7 +54,7 @@ python scale_injections.py --run_name <String> --super_scales <int>
 ```
 
 ### Paint2Image
-_Note_: You have to additionally provide a training image via --img if you want to train a new model. The paint images are expected to be found in the data/paint subdirectory.
+_Note_: You have to additionally provide a training image via ```--img``` if you want to train a new model. The paint images are expected to be found in the data/paint subdirectory.
 
 ```console
 python paint2image.py --run_name <String> --paint 5026_1.jpg
