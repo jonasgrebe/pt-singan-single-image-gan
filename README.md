@@ -113,7 +113,6 @@ training       |       paint   |   Scale 7/9   |    Scale 9/9
 training       |       paint   |   Scale 6/9   |    Scale 9/9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 ![train](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/5739-black-nike-slide-sandals-on-swimming-pool.jpg)  | ![img1](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/data/paint/5793_0.jpg)| ![img2](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/paint_5793_0_6.jpg) | ![img3](https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/samples/singan_5739/paint_5793_0_9.jpg)
-----
 
 training       |       paint   |   Scale 6/9   |    Scale 9/9
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
