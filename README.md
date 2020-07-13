@@ -7,6 +7,7 @@ Inofficial implementation of the paper __"[SinGAN: Learning a Generative Model f
 </a>
 
 ## The web application
+<img src="https://github.com/jonasgrebe/pt-singan-single-image-gan/blob/master/img/ui.jpg" width="1000">
 
 ### Setup
 In order to execute the web application on your local computer, you need to do the following.
