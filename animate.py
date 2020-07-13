@@ -12,15 +12,15 @@ parser = argparse.ArgumentParser()
 
 parser = argparse.ArgumentParser(description='SinGAN - Super Resolution')
 parser.add_argument('--run_name', required=True)
-parser.add_argument('--img', required=True)
 parser.add_argument('--frames', type=int, required=True)
 parser.add_argument('--alpha', type=float, default=0.1)
 parser.add_argument('--beta', type=float, default=0.9)
 parser.add_argument('--start_at_scale', type=int, default=None)
 parser.add_argument('--fps', type=int, default=30)
 
-parser.add_argument('--N', type=int, default=0)
 parser.add_argument('--not_pretrained', action='store_true')
+parser.add_argument('--img')
+parser.add_argument('--N', type=int, default=0)
 parser.add_argument('--steps_per_scale', type=int, default=2000)
 
 args = parser.parse_args()
@@ -31,24 +31,25 @@ if torch.cuda.is_available():
 else:
     device = torch.device("cpu")
 
-# load the single training image
-train_img_path = os.path.join('data', args.img)
-train_img = imread(train_img_path)
-
 # instantiate the logger and the SinGAN
 logger = TensorboardLogger(f'singan_{args.run_name}')
 singan = SinGAN(N=args.N, logger=logger, device=device)
 
-# get the size of the img for later
-img_size = train_img.shape[:-1]
 
 if args.not_pretrained:
+    # load the single training image
+    train_img_path = os.path.join('data', args.img)
+    train_img = imread(train_img_path)
+    # fit SinGAN to it
     singan.fit(img=train_img, steps_per_scale=args.steps_per_scale)
+    # after training, save the model in a checkpoint
     singan.save_checkpoint()
 else:
+    # load the existing checkpoint if possible
     singan.load_checkpoint(logger.run_name)
+    train_img = singan.train_img
 
-target_size = img_size
+target_size = train_img.shape[:-1]
 img = train_img
 
 scale_sizes = singan.compute_scale_sizes(target_size)

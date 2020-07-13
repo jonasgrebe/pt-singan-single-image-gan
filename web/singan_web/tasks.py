@@ -5,22 +5,35 @@ import sys
 
 from .models import ImageModel
 from django.conf import settings
+import os
 from os import listdir
 from os.path import isfile, join
 
 # Don't change the following order
 sys.path.append("..")
 import singan as sg
+import torch
 from log import TensorboardLogger
+
 
 # Variables only accessible by Celery
 pretrained_models = []
 singan = None
 
+# get the available device
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")
+else:
+    device = torch.device("cpu")
 
 def get_images_of_pretrained_models():
     load_pretrained_models()
     return pretrained_models[1]
+
+required_dirs = ['../media/out', '../media/pictures', '../media/pretrained']
+for dir in required_dirs:
+    if not os.path.isdir(dir):
+        os.makedirs(dir)
 
 
 def load_pretrained_models():
@@ -78,7 +91,7 @@ def train_singan(image_path, N, r, steps_per_scale):
     global singan
 
     logger = TensorboardLogger(f'singan_web')
-    singan = sg.SinGAN(N, logger, r)
+    singan = sg.SinGAN(N, logger, r, device=device)
 
     image = imread(image_path)
     singan.fit(img=image, steps_per_scale=steps_per_scale)

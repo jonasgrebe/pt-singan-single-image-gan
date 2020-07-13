@@ -342,11 +342,13 @@ class SinGAN:
         # inform the logger about the restored epoch
         self.logger.set_scale(self.N - len(self.g_pyramid) + 1)
 
+
     def update_celery_state(self):
-        current_task.update_state(state='PROGRESS',
-                                  meta={'current': self.done_steps,
-                                        'total': self.total_steps,
-                                        'percent': int((self.done_steps / self.total_steps) * 100)})
+        if current_task:
+            current_task.update_state(state='PROGRESS',
+                                      meta={'current': self.done_steps,
+                                            'total': self.total_steps,
+                                            'percent': int((self.done_steps / self.total_steps) * 100)})
 
 
 def load_pretrained(checkpoint_path) -> SinGAN:

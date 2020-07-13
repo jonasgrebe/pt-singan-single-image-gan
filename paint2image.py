@@ -15,9 +15,9 @@ parser.add_argument('--paint', required=True)
 parser.add_argument('--target_height', type=int, default=None)
 parser.add_argument('--target_width', type=int, default=None)
 
-parser.add_argument('--N', type=int, default=0)
-parser.add_argument('--img', default=None)
 parser.add_argument('--not_pretrained', action='store_true')
+parser.add_argument('--img')
+parser.add_argument('--N', type=int, default=0)
 parser.add_argument('--steps_per_scale', type=int, default=2000)
 
 args = parser.parse_args()
