@@ -201,7 +201,8 @@ i.fa {
 }
 
 #generated-image {
-    
+    width: 100%;
+    height: auto;
 }
 
 #img-upload {
