@@ -30,7 +30,7 @@ def get_images_of_pretrained_models():
     load_pretrained_models()
     return pretrained_models[1]
 
-required_dirs = ['../media/out', '../media/pictures', '../media/pretrained']
+required_dirs = ['media/out', 'media/pictures', 'media/pretrained']
 for dir in required_dirs:
     if not os.path.isdir(dir):
         os.makedirs(dir)
