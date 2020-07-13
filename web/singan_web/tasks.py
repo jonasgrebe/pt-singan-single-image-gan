@@ -139,11 +139,11 @@ def generate_paint2image(image_path, start_at_scale):
 
 
 @shared_task
-def generate_harmonization(image_path):
+def generate_harmonization(image_path, start_at_scale):
     if not isinstance(singan, sg.SinGAN):
         return "SinGAN not initialized"
 
-    start_at_scale = min(4, singan.N - 1)  # TODO: Test this
+    # start_at_scale = min(4, singan.N - 1)  # TODO: Test this
     return generate_injection(image_path, start_at_scale)
 
 

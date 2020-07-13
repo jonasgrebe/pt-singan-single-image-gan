@@ -48,6 +48,18 @@ class Paint2ImageForm(forms.Form):
                               initial=str(N))
 
 
+class HarmonizationForm(forms.Form):
+    def __init__(self, N, *args, **kwargs):
+        super(HarmonizationForm, self).__init__(*args, **kwargs)
+
+        levels_of_detail = list(zip(range(N), get_detail_labels(N)))
+
+        self.fields['start_at_scale'] = \
+            forms.ChoiceField(label='Level of detail',
+                              choices=levels_of_detail,
+                              initial=str(N))
+
+
 class InjectionForm(forms.Form):
     def __init__(self, N, *args, **kwargs):
         super(InjectionForm, self).__init__(*args, **kwargs)

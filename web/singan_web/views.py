@@ -240,15 +240,18 @@ def show_harmonization_form(request):
     task_id = None
     error_msg = None
     if request.method == 'POST':
-        # form = HarmonizationForm(request.POST, request.FILES)
+        form = HarmonizationForm(singan_info['N'], request.POST, request.FILES)
 
         global input_image_model
         if input_image_model is None:
             error_msg = "Please provide an input image."
-        else:
+        elif form.is_valid():
+            start_at_scale = int(form.cleaned_data['start_at_scale'])
             image_path = input_image_model.image.path
-            async_task = generate_harmonization.delay(image_path)
+            async_task = generate_harmonization.delay(image_path, start_at_scale)
             task_id = async_task.task_id
+    else:
+        form = HarmonizationForm(N=singan_info['N'])
 
     mode = 'Harmonization'
     description = 'Using this mode you can make an input image look ' \
@@ -258,6 +261,7 @@ def show_harmonization_form(request):
     show_image_upload = mode in modes_w_input_image
     return render(request, 'singan_web/generate.html', {'mode': mode,
                                                         'description': description,
+                                                        'form': form,
                                                         'task_id': task_id,
                                                         'show_image_upload': show_image_upload,
                                                         'input_image_url': get_input_image_url(),
